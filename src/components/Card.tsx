@@ -16,6 +16,7 @@ export default class Card extends Component<UserData> {
 }
 
 export interface UserData {
+  id: number;
   avatar_url: string;
   name: string;
   company: string;

@@ -7,11 +7,7 @@ function GitHub() {
   const [data, setData] = useState<UserData[]>([]);
   return (
     <div>
-      <Form
-        onSubmit={(newUser: UserData) =>
-          setData([...(data as UserData[]), newUser])
-        }
-      />
+      <Form onSubmit={(newUser: UserData) => setData([...data, newUser])} />
       <CardList data={data} />
     </div>
   );

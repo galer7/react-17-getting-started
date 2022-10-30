@@ -5,7 +5,7 @@ function CardList({ data }: { data: UserData[] }) {
   return (
     <div>
       {data.map((user) => (
-        <Card {...user} />
+        <Card key={user.id} {...user} />
       ))}
     </div>
   );
