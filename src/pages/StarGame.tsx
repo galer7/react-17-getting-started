@@ -1,3 +1,4 @@
+import "./StarGame.css";
 import { useState } from "react";
 import NumberButton, { colors } from "../components/NumberButton";
 import * as utils from "../utils";
@@ -11,14 +12,13 @@ function StarGame() {
     utils.iterate(MAX_STARS).map((n) => n + 1)
   );
 
-  const areCandidateNumsWrong =
-    candidateNums.reduce((n, acc) => n + acc) > stars;
+  const areCandidateNumsWrong = utils.sum(candidateNums) > stars;
 
-  const getNumberStatus = (nr: number) => {
-    if (!availableNums.includes(nr)) return colors.used;
-    if (!candidateNums.includes(nr)) return colors.available;
+  const getNumberStatus = (nr: number): keyof typeof colors => {
+    if (!availableNums.includes(nr)) return "used";
+    if (!candidateNums.includes(nr)) return "available";
 
-    return areCandidateNumsWrong ? colors.wrong : colors.candidate;
+    return areCandidateNumsWrong ? "wrong" : "candidate";
   };
 
   const setGameState = (newCandidateNums: number[]) => {
@@ -33,6 +33,8 @@ function StarGame() {
       setCandidateNums([]);
     }
   };
+
+  const gameStatus = availableNums.length === 0 ? "won" : "active";
 
   const onNumberClick = (
     number: number,
@@ -51,16 +53,27 @@ function StarGame() {
   };
 
   return (
-    <div>
-      <div className="left"></div>
+    <div className="game">
+      <div className="left">
+        {gameStatus === "active"
+          ? utils.iterate(stars).map((index) => (
+              <div key={index} style={{ height: 32, width: 32 }}>
+                ⭐
+              </div>
+            ))
+          : gameStatus === "won"
+          ? "Nice!"
+          : "Try again"}
+      </div>
       <div className="right">
         {utils.iterate(MAX_STARS).map((nr) => {
           const actualNr = nr + 1;
           return (
             <NumberButton
+              key={nr}
               number={actualNr}
               status={getNumberStatus(actualNr)}
-              onClick={() => setCandidateNums([...candidateNums, actualNr])}
+              onClick={onNumberClick}
             />
           );
         })}

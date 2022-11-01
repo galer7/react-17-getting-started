@@ -1,9 +1,32 @@
 .game {
     display: flex;
+    width: 100vw;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .right {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
+}
+
+.left {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.left > div {
+    flex: 0 0 33%;
+    gap: 64px 16px;
+}
+
+.game {
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%,50%);
+    position: absolute;
+    height: 50%;
+    width: 50%;
 }
